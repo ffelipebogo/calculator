@@ -6,16 +6,18 @@ import Icon from 'react-native-vector-icons/Feather';
 interface Props {
     icon?: string | any,
     text?: string,
+    disable?: boolean,
     onClick: () => void,
 }
 
 const Buttons: React.FC<Props> = (props) => {
+
+    const numbers: string[] = ['.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    var hasNumber = numbers.filter(e => e == props.text);
     return (
-        <TouchableOpacity style={[styles.container, styles.shadowProp]} onPress={props.onClick} >
+        <TouchableOpacity style={[styles.container, styles.shadowProp]} onPress={props.onClick} disabled={props.disable}>
             {
-                props.icon ?
-                    <Icon name={props.icon} style={styles.icon}></Icon> :
-                    <Text style={styles.text}>{props.text}</Text>
+                <Text style={hasNumber.length > 0 ? styles.textNumber : styles.text}>{props.text}</Text>
             }
         </TouchableOpacity>
     )
@@ -31,7 +33,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 12,
-        marginRight: 10
+        marginRight: 5,
+        marginLeft: 5
     },
     shadowProp: {
         shadowColor: '#0087F3',
@@ -51,7 +54,11 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 23,
         color: '#0087F3'
-    }
+    },
+    textNumber: {
+        fontSize: 23,
+        color: '#000'
+    },
 });
 
 export default Buttons
